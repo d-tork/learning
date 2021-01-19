@@ -1,5 +1,8 @@
 # Apache Spark Programming
 
+## Good resources
+* https://sparkbyexamples.com/spark/spark-dataframe-withcolumn/ 
+
 ## 1.2 Databricks Platform
 
 ### Creating tables from data in dbfs
@@ -134,6 +137,18 @@ df.show()
 | `limit`                    | Returns a new DataFrame by taking the first n rows                                                 |
 | `groupBy`                  | Groups the DataFrame using the specified columns, so we can run aggregation on them                |
 
+## DataFrame Action Methods
+
+| method              | description                                               |
+| ---------------     | -----------                                               |
+| `show`              | Displays the top n rows of DataFrame in a tabular form    |
+| `count`             | Returns the number of rows in the DataFrame               |
+| `describe, summary` | Computes basic statistics for numeric and string columns  |
+| `first`             | Returns the first row                                     |
+| `head`              | Returns the first n rows                                  |
+| `collect`           | Returns an array that contains all rows in this DataFrame |
+| `take`              | Returns an array of the first n rows in the DataFrame     |
+
 ### Subselecting and aliasing columns
 ```scala
 import org.apache.spark.sql.functions.col
@@ -151,6 +166,27 @@ val anonymousDF = eventsDF.drop("user_id", "geo", "device")
 ### Add or replace columns
 ```scala
 val mobileDF = eventsDF.withColumn("mobile", col("device").isin("iOS", "Android"))
+```
+
+### Filtering rows
+```scala
+val purchasesDF = eventsDF.filter("ecommerce.total_item_quantity > 0")
+
+val androidDF = eventsDF.filter((col("traffic_source") =!= "direct") && (col("device") === "Android"))
+```
+
+### Drop duplicates with subset of cols
+```scala
+val distinctUsersDF = eventsDF.dropDuplicates(Seq("user_id"))
+```
+
+### Sorting
+```scala
+val increaseTimestampDF = eventsDF.sort("event_timestamp")
+
+val decreaseTimestampDF = eventsDF.sort(col("event_timestamp").desc)
+
+val increaseSessionsDF = eventsDF.orderBy("user_first_touch_timestamp", "event_timestamp")
 ```
 
 ## Splitting a string column
