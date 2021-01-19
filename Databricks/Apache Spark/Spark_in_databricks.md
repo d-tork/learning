@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS events USING parquet OPTIONS (path "/mnt/training/eco
 ### Using scala to execute SQL
 
 With SQL
-```
+```scala
 val budgetDF = spark.sql("""
 SELECT name, price
 FROM products
@@ -21,18 +21,18 @@ ORDER BY price
 ```
 
 With DataFrame API
-```
+```scala
 val budgetDF = spark.table("products")
 	.select("name", "price")
 	.where("price < 200")
 	.orderBy("price")
 
-budgetDF.show()  	# in spark-shell
-display(budgetDF)  	# table format for Databricks notebook
+budgetDF.show()  	// in spark-shell
+display(budgetDF)  	// table format for Databricks notebook
 ```
 
 ### Convert between dataframes and SQL
-```
+```scala
 # SparkDF --> SQL view
 budgetDF.createOrReplaceTempView("budget")
 
@@ -42,7 +42,7 @@ val budgetDF = spark.sql("SELECT * FROM budget")
 
 ## 1.4 Reader & Writer
 ### Read from CSV
-```
+```scala
 val usersCsvPath = "/mnt/training/ecommerce/users/users-500k.csv"
 val usersDF = spark.read
 	.option("sep", "\t")
@@ -54,7 +54,7 @@ usersDF.printSchema()
 ```
 
 ### Read from JSON
-```
+```scala
 val eventsJsonPath = "/mnt/training/ecommerce/events/events-500k.json"
 val eventsDF = spark.read
 	.option("inferSchema", true)
@@ -74,7 +74,7 @@ eventsDF.printSchema()
 
 # Misc.
 ## Creating an RDD
-```
+```scala
 val data = Array(1, 2, 3, 4, 5)
 val distData = sc.parallelize(data)
 ```
@@ -87,7 +87,7 @@ from https://blog.knoldus.com/difference-between-rdd-df-and-ds-in-spark/
 
 DataFrames are an abstraction which gives a view of the data with a schema (column names and type info).
 
-```
+```scala
 case class Person(name : String, age:Int)
 
 // Create spark session object
@@ -120,7 +120,7 @@ splitting year_artist with
 |     1955_Tex Ritter|    1|
 ```
 
-```
+```scala
 import org.apache.spark.sql.functions.regexp_extract
 
 df.select(
