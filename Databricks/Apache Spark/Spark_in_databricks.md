@@ -63,6 +63,9 @@ val eventsDF = spark.read
 eventsDF.printSchema()
 ```
 
+**Note**: you can read data faster by creating the schema yourself with a `StructType` (perhaps
+80% faster)
+
 ## Common Spark DF commands
 
 | command            | description                        |
@@ -105,6 +108,51 @@ val df = List(Person("shubham",21),Person("rahul",23)).toDF
 df.show()
 ```
 
+## Column Operators and Methods
+
+| operator/method            | description                                                                 |
+| ---------------            | -----------                                                                 |
+| `&&, \|\|`                 | Boolean AND, OR                                                             |
+| `\*, +, <, >=`             | Math and comparison operators                                               |
+| `===, =!=`                 | Equality and inequality tests                                               |
+| `alias, as`                | Gives the column an alias (**as** only in Scala)                            |
+| `cast`                     | Casts the column to a different data type                                   |
+| `isNull, isNotNull, isNan` | Is null                                                                     |
+| `asc, desc`                  | Returns a sort expression based on ascending/descending order of the column |
+
+## DataFrame Transformation Methods
+
+| method                     | description                                                                                        |
+| ---------------            | -----------                                                                                        |
+| `select`                   | Returns a new DataFrame by computing given expression for each element                             |
+| `drop`                     | Returns a new DataFrame with a column dropped                                                      |
+| `withColumnRenamed`        | Returns a new DataFrame with a column renamed                                                      |
+| `withColumn`               | Returns a new DataFrame by adding a column or replacing the existing column that has the same name |
+| `filter, where`            | Filters rows using the given condition                                                             |
+| `sort, orderBy`            | Returns a new DataFrame sorted by the given expressions                                            |
+| `dropDuplicates, distinct` | Returns a new DataFrame with duplicate rows removed                                                |
+| `limit`                    | Returns a new DataFrame by taking the first n rows                                                 |
+| `groupBy`                  | Groups the DataFrame using the specified columns, so we can run aggregation on them                |
+
+### Subselecting and aliasing columns
+```scala
+import org.apache.spark.sql.functions.col
+
+val locationsDF = eventsDF.select(col("user_id"),
+	col("geo.city").alias("city"),
+	col("geo.state").alias("state"))
+```
+
+### Dropping columns
+```scala
+val anonymousDF = eventsDF.drop("user_id", "geo", "device")
+```
+
+### Add or replace columns
+```scala
+val mobileDF = eventsDF.withColumn("mobile", col("device").isin("iOS", "Android"))
+```
+
 ## Splitting a string column
 https://stackoverflow.com/questions/44750844/how-to-split-column-to-two-different-columns
 
@@ -127,4 +175,22 @@ df.select(
 	regexp_extract($"year_artist", "^(\\d{4})_(.*)", 1).alias("year"),
 	regexp_extract($"year_artist", "^(\\d{4})_(.*)", 2).alias("artist")
 )
+```
+
+Edmond's version
+```scala
+val regexp_pattern = "(.*?)\\{(.*?)\\}(.*?)\\{(.*?)\\}(.*?\\{(.*?)\\}"
+val df = df_raw.withColumn("brand",regexp_extract($"file", regexp_pattern,1)).
+			    withColumn("brand_hash",regexp_extract($"file", regexp_pattern,2)).
+			    withColumn("model",regexp_extract($"file", regexp_pattern,3)).
+			    withColumn("model_hash",regexp_extract($"file", regexp_pattern,4)).
+			    withColumn("serial",regexp_extract($"file", regexp_pattern,5)).
+			    withColumn("serial_hash",regexp_extract($"file", regexp_pattern,6)).
+```
+
+Loop pseudocode (deleteme)
+```
+new_cols = ['brand', 'brand_hash', 'model', 'model_hash', 'serial', 'serial_hash']
+for i, newcol in new_cols:
+	df.withColumn(col,regexp_extract($"file", regexp_pattern, i))
 ```
