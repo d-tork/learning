@@ -34,7 +34,9 @@ val df_raw = spark.createDataFrame(
 // df_raw.show
 
 /* Parse File into 6 fields  */
-/* Method 1 via withColumn */
+/* ==================================================
+   Method 1 via withColumn 
+*/
 val regexp_pattern = "(.*?)\\{(.*?)\\}(.*?)\\{(.*?)\\}(.*?)\\{(.*?)\\}"
 val df1 = df_raw.withColumn("brand",regexp_extract($"file",regexp_pattern,1)).
                 withColumn("brand_hash",regexp_extract($"file",regexp_pattern,2)).
@@ -44,7 +46,9 @@ val df1 = df_raw.withColumn("brand",regexp_extract($"file",regexp_pattern,1)).
                 withColumn("serial_hash",regexp_extract($"file",regexp_pattern,6))
 df1.show()
 
-/* Method 2 via select */
+/* ==================================================
+   Method 2 via select 
+*/
 val df2 = df_raw.select($"*",
                         regexp_extract($"file", regexp_pattern, 1).alias("brand"),
                         regexp_extract($"file", regexp_pattern, 2).alias("brand_hash"),
@@ -55,7 +59,9 @@ val df2 = df_raw.select($"*",
                         )
 df2.show()
 
-/* Method 3 - using variables and loop */
+/* ==================================================
+   Method 3 - using variables and loop 
+*/
 import spark.implicits._
 
 val newCols: Seq[String] = Seq("brand", "brand_hash", "model", "model_hash", "serial", "serial_hash")
@@ -89,3 +95,27 @@ val df3 = df_raw.select($"*" +: newCols2.map({case (i, new_col) =>
 // ... : _*     unpacks combined sequence
 df3.show()
 
+/* ==================================================
+   Method 4 - using split with regex pattern or array of delimiters
+   URL https://stackoverflow.com/questions/39255973/split-1-column-into-3-columns-in-spark-scala
+*/
+
+import org.apache.spark.sql.functions.split
+
+val list = List("brand","brand_hash","model","model_hash","serial","serial_hash")
+val split_pattern = split(df_raw("file"),"[\\{\\}]")
+
+val df4 = df_raw.select($"*" +:
+                        (0 until 6).map(i => split_pattern.getItem(i).as(list(i))): _* )
+df4.show()
+
+/* ==================================================
+   Method 5 - foldLeft
+   URL https://stackoverflow.com/questions/48114167/how-to-add-multiple-columns-in-a-spark-dataframe-using-scala
+*/
+
+val list2 = List(("brand", 0), ("brand_hash",1), ("model",2), ("model_hash",3), ("serial",4), ("serial_hash",5))
+val split_pattern = split(df_raw("file"),"[\\{\\}]")
+
+val df5 = list2.foldLeft(df_raw) { (tmp_df,tmp_list) => tmp_df.withColumn(tmp_list._1,split_pattern(tmp_list._2)) }
+df5.show
