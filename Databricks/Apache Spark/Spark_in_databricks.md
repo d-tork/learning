@@ -1,7 +1,7 @@
 # Apache Spark Programming
 
 ## Good resources
-* https://sparkbyexamples.com/spark/spark-dataframe-withcolumn/ 
+* https://sparkbyexamples.com
 
 ## 1.2 Databricks Platform
 
