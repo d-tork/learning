@@ -21,13 +21,17 @@ Method 3 based on
 import org.apache.spark.sql.functions.regexp_extract;
 
 /* Input */
-val df_raw = spark.createDataFrame(
+var df_raw = spark.createDataFrame(
   Seq( ("5000001","Brandon Louis","brandname{0brnd}modelname{1mdln}serial{123456abcdefg}"),
        ("5000002","Marilyn Ham","honda{5hnda}cbr600{3cbr0}hondacbr2{293847japrntk}"),
        ("5000003","Mister Tee","yamaha{3ymha}r6{9r600}yamahar66{683964qwertyu}"), 
        ("5000004","Nunya Beeswax","triumph{2trmf}trident660{5trdt}triumphtrident0{016598dvoraku}"), 
        ("5000005","Michael Eller","aprilla{8aprl}rs660{0rs60}aprillars9{926593rlstnem}")
         )).toDF("id","name","file")
+
+for (i <- 1 to 8){
+  df_raw = df_raw.union(df_raw)
+}
 
 /* Show Schema */
 // df_raw.printSchema
