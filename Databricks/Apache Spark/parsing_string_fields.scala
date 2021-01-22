@@ -33,6 +33,9 @@ for (i <- 1 to 8){
   df_raw = df_raw.union(df_raw)
 }
 
+//execute arbitrary action
+df_raw.foreach(_=>())
+
 /* Show Schema */
 // df_raw.printSchema
 // df_raw.show

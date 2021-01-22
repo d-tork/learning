@@ -121,7 +121,7 @@ df.show()
 | `alias, as`                | Gives the column an alias (**as** only in Scala)                            |
 | `cast`                     | Casts the column to a different data type                                   |
 | `isNull, isNotNull, isNan` | Is null                                                                     |
-| `asc, desc`                  | Returns a sort expression based on ascending/descending order of the column |
+| `asc, desc`                | Returns a sort expression based on ascending/descending order of the column |
 
 ## DataFrame Transformation Methods
 
@@ -224,9 +224,22 @@ val df = df_raw.withColumn("brand",regexp_extract($"file", regexp_pattern,1)).
 			    withColumn("serial_hash",regexp_extract($"file", regexp_pattern,6)).
 ```
 
-Loop pseudocode (deleteme)
+## Empty function
+Need to force Spark to execute an action on data, but don't care what it is? 
+```scala
+df.foreach(x => ())
 ```
-new_cols = ['brand', 'brand_hash', 'model', 'model_hash', 'serial', 'serial_hash']
-for i, newcol in new_cols:
-	df.withColumn(col,regexp_extract($"file", regexp_pattern, i))
+
+## Create a really big dataframe
+Union it to itself
+```scala
+sc.setJobDescription("Step X: Create a really big dataframe")
+
+var bigDF = initialDF
+
+for (i <- 0 to 6) {
+	bigDF = bigDF.union(bigDF).reparition(sc.defaultParallelsim)
+}
+
+bigDF.foreach(_=>())
 ```
