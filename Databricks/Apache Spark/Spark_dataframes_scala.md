@@ -177,6 +177,11 @@ val mobileDF = eventsDF.withColumn("mobile", col("device").isin("iOS", "Android"
 val purchasesDF = eventsDF.filter("ecommerce.total_item_quantity > 0")
 
 val androidDF = eventsDF.filter((col("traffic_source") =!= "direct") && (col("device") === "Android"))
+
+// with varargs
+val items = Seq("item1", "item2")
+val filtered = df.filter($"col".isin(items:_*))  //or
+val filtered = df.filter($"col".isInCollection(items))
 ```
 
 ### Drop duplicates with subset of cols
