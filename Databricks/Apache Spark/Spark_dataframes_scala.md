@@ -112,6 +112,7 @@ df.show()
 ```
 
 ## Column Operators and Methods
+https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html
 
 | operator/method            | description                                                                 |
 | ---------------            | -----------                                                                 |
@@ -122,6 +123,9 @@ df.show()
 | `cast`                     | Casts the column to a different data type                                   |
 | `isNull, isNotNull, isNan` | Is null                                                                     |
 | `asc, desc`                | Returns a sort expression based on ascending/descending order of the column |
+| `startsWith, endsWith`     | String starts/ends with "..."                                               |
+| `isInCollection`           | Test column value for membership in iterable                                |
+| `contains`                 | Test column value for containing a given other                              |
 
 ## DataFrame Transformation Methods
 
