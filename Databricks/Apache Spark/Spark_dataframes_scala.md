@@ -216,6 +216,17 @@ df.withColumn(
 )
 ```
 
+### Regex string pattern notes
+```scala
+val pattern = raw"[A-Z]{4}-[A-Z]{2}-\w+"  	//a string (raw prefix)
+val pattern = """[A-Z]{4}-[A-Z]{2}-\w+"""  	//a string (triple quotes)
+val pattern = "[A-Z]{4}-[A-Z]{2}-\\w+"  	//a string (escaped \w)
+val pattern = "[A-Z]{4}-[A-Z]{2}-\w+".r		//ERROR invalid escape character \w
+val pattern = "[A-Z]{4}-[A-Z]{2}-\w+"		//ERROR invalid escape character \w
+val pattern = """[A-Z]{4}-[A-Z]{2}-\w+""".r  	//a Regex (triple quotes)
+val pattern = "[A-Z]{4}-[A-Z]{2}-\\w+".r  	//a Regex (escaped \w)
+```
+
 ### Drop duplicates with subset of cols
 ```scala
 val distinctUsersDF = eventsDF.dropDuplicates(Seq("user_id"))
