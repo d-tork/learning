@@ -68,7 +68,7 @@ eventsDF.printSchema()
 
 ### Read from multiple paths
 ```scala
-val folder_path = List('folder_1','folder_2','folder_x')
+val folder_path = List("folder_1","folder_2","folder_x")
 val rawDF = sqlContext.read.parquet(folder_path: _*)
 
 //With regex (untested)
