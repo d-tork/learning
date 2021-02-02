@@ -135,7 +135,7 @@ https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html
 | `asc, desc`                | Returns a sort expression based on ascending/descending order of the column |
 | `startsWith, endsWith`     | String starts/ends with "..."                                               |
 | `isInCollection`           | Test column value for membership in iterable                                |
-| `contains`                 | Test column value for containing a given other                              |
+| `contains`                 | Test column value for containing a given other (simple strings only)        |
 
 ## DataFrame Transformation Methods
 
@@ -192,6 +192,28 @@ val androidDF = eventsDF.filter((col("traffic_source") =!= "direct") && (col("de
 val items = Seq("item1", "item2")
 val filtered = df.filter($"col".isin(items:_*))  //or
 val filtered = df.filter($"col".isInCollection(items))
+```
+
+### Filtering strings (handling case-sensitivity)
+```scala
+// Convert the column values
+df.filter(lower(df.col("vendor")).equalTo("fortinet"))  //or
+df.filter(upper(df.col("vendor")).equalTo("FORTINET"))
+
+df.where(lower($"vendor") === "fortinet")
+
+// use rlike
+df.where($"vendor".rlike("(?i)^fortinet$"))  //where (?i) is case-insensitive flag
+```
+
+### More regex `rlike` filtering
+Just remember to double escape `\\` any regex characters you want to actually match (or use `Pattern.quote()`)
+```scala
+// Constructing a pipe-delimited OR filter
+val animals = List("cat", "dog")
+df.withColumn(
+  "contains_cat_or_dog", col("phrase").rlike(animals.mkString("|"))
+)
 ```
 
 ### Drop duplicates with subset of cols
