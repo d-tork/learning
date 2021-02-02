@@ -66,6 +66,16 @@ val eventsDF = spark.read
 eventsDF.printSchema()
 ```
 
+### Read from multiple paths
+```scala
+val folder_path = List('folder_1','folder_2','folder_x')
+val rawDF = sqlContext.read.parquet(folder_path: _*)
+
+//With regex (untested)
+val inputpath = "/root/path/todir/2015{0[1-6]}[0-3]*"
+val rawDF = spark.read.csv(inputpath)
+```
+
 **Note**: you can read data faster by creating the schema yourself with a `StructType` (perhaps
 80% faster)
 
