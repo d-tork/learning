@@ -61,6 +61,15 @@ val anonymousDF = eventsDF.drop("user_id", "geo", "device")
 val mobileDF = eventsDF.withColumn("mobile", col("device").isin("iOS", "Android"))
 ```
 
+### Reordering columns (manually or alphabetically)
+```scala
+val manualColumns = Seq("zulu", "yankee", "x_ray").map(str => col(str))
+df.select(manualColumns:_*)
+
+val alphaCols = df.columns.sorted.map(str => col(str))
+df.select(alphaCols:_*)
+```
+
 ## Filtering
 ### Filtering rows
 ```scala
