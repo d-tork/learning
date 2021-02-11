@@ -61,7 +61,8 @@ val stateAggregatesDF = df.groupBy("geo.state").agg(
 	approx_count_distinct("user_id").alias("distinct_users"))
 ```
 
-## 2.2 Datetimes
+## 2.2 [Datetimes](https://spark.apache.org/docs/latest/sql-ref-datetime-pattern.html)
+Based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/10/docs/api/java/time/format/DateTimeFormatter.html)
 
 ### Built-in functions
 | function         | description                                                                                          |
