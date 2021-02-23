@@ -123,6 +123,21 @@ val formattedDF = timestampDF.withColumn("date_string", date_format(col("timesta
 | `explode`        | Creates a new row for each element in the given array or map column                          |
 | `slice`          | Returns an array containing all the elements in x from index start with the specified length |
 
+### Flattening a nested dataframe
+[Plain array](https://sparkbyexamples.com/spark/explode-spark-array-and-map-dataframe-column/)
+```scala
+df.select($"name", explode($"properties"))
+```
+
+[`Struct` type](https://sparkbyexamples.com/spark/spark-flatten-nested-struct-column/)
+```scala
+val df2 = df.select(col("name.*"), 
+	col("address.current.*"),
+	col("address.previous.*"))
+val df2Flatten = df2.toDF("fname", "mname", "lname", "currAddState",
+	"currAddCity", "prevAddState", "prevAddCity")
+```
+
 ### Filter for item in array
 ```scala
 import org.apache.spark.sql.functions._
