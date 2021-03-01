@@ -61,6 +61,15 @@ val stateAggregatesDF = df.groupBy("geo.state").agg(
 	approx_count_distinct("user_id").alias("distinct_users"))
 ```
 
+How to include `count` in an `agg`:
+```scala
+df.groupBy("some_col").agg(
+	mean("value_col").alias("mean"),
+	max("date_col").alias("latest_date"),
+	count(lit(1)).alias("record_count")
+	)
+```
+
 ## 2.2 [Datetimes](https://spark.apache.org/docs/latest/sql-ref-datetime-pattern.html)
 Based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/10/docs/api/java/time/format/DateTimeFormatter.html)
 
