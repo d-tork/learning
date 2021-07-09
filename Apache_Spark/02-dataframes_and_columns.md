@@ -76,6 +76,7 @@ df.select(alphaCols:_*)
 val purchasesDF = eventsDF.filter("ecommerce.total_item_quantity > 0")
 
 val androidDF = eventsDF.filter((col("traffic_source") =!= "direct") && (col("device") === "Android"))
+val android = eventsDF.where("device = 'Android'")
 
 // with varargs
 val items = Seq("item1", "item2")
