@@ -29,8 +29,11 @@ display(budgetDF)  	// table format for Databricks notebook
 
 ## Convert between dataframes and SQL
 ```scala
-# SparkDF --> SQL view
+# SparkDF --> SQL view (local)
 budgetDF.createOrReplaceTempView("budget")
+
+# SparkDF --> SQL table (global)
+budgetDF.write.mode("overwrite").saveAsTable("budget_s")
 
 # SQL view --> spark df
 val budgetDF = spark.sql("SELECT * FROM budget")

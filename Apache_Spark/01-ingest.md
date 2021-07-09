@@ -36,7 +36,7 @@ val rawDF = spark.read.csv(inputpath)
 **Note**: you can read data faster by creating the schema yourself with a `StructType` (perhaps
 80% faster):
 
-to match the schema (`usersDF.printSchema()`)
+to match the schema (the result of `usersDF.printSchema()`)
 ```
 root
   |-- user_id: string(nullable = true)
@@ -44,6 +44,7 @@ root
   |-- email: string (nullable = true)
 ```
 
+create it with
 ```scala
 import org.apache.spark.sql.types{LongType, StringType, StructType, StructField}
 
@@ -52,6 +53,25 @@ val userDefinedSchema = StructType(Seq(
 	StructField("user_first_touch_timestamp", LongType, true),
 	StructField("email", StringType, true)
 ))
+```
+
+and use it with
+```scala
+val usersDF = spark.read
+	.option("sep", "\t")
+	.option("header", true)
+	.schema(userDefinedSchema)
+	.csv(usersCsvPath)
+```
+
+Alternatively, define the schema with a DDL formatted string
+```scala
+val DDLSchema = "user_id string, user_first_touch_timestamp long, email string"
+val usersDF = spark.read
+	.option("sep", "\t")
+	.option("header", true)
+	.schema(DDLSchema)
+	.csv(usersCsvPath)
 ```
 
 ## Common Spark DF commands
