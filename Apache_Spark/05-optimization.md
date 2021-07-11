@@ -25,7 +25,12 @@ df.cache()
 ```
 
 **Note**: a call to `cache()` does not immediately materialize the data in cache. An action must
-be executed for Spark to actually cache the data.
+be executed for Spark to actually cache the data, even if it's an empty function.
+
+#### Empty function
+```scala
+df.foreach(x => ())
+```
 
 Remove cache when you're done
 ```scala

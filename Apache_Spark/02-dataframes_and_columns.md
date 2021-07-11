@@ -166,9 +166,3 @@ val df = df_raw.withColumn("brand",regexp_extract($"file", regexp_pattern,1)).
 			    withColumn("serial",regexp_extract($"file", regexp_pattern,5)).
 			    withColumn("serial_hash",regexp_extract($"file", regexp_pattern,6)).
 ```
-
-## Empty function
-Need to force Spark to execute an action on data, but don't care what it is? 
-```scala
-df.foreach(x => ())
-```
