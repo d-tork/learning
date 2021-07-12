@@ -6,6 +6,8 @@ Importing built-in functions: `org.apache.spark.sql.functions._`
 See [this StackOverflow answer](https://stackoverflow.com/questions/45131481/how-to-use-collect-set-and-collect-list-functions-in-windowed-aggregation-in-spa) for using `Window.partitionBy`
 
 ### Grouped Data Operations
+Where `groupBy` takes a column name as string, not a column itself, e.g. `$"colname"` or `col("colname")
+
 | command          | description                                                                     |
 | ---------------- | -----------                                                                     |
 | `agg`            | Specify a series of aggregate columns                                           |
@@ -102,8 +104,8 @@ Based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/10/docs/api
 
 ### Getting a timestamp from a string
 ```scala
-val datetimeDF = df.withColumn("ts", (col("ts") / 1e6).cast("timestamp"))
-	.withColumn("date", to_date(col("ts")))  // bonus, just the date column
+val datetimeDF = df.withColumn("ts", ($"ts" / 1e6).cast("timestamp"))
+	.withColumn("date", to_date($"ts"))  // bonus, just the date column
 ```
 
 ### Format existing timestamp as other format

@@ -4,28 +4,28 @@
 https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html
 
 | operator/method            | description                                                                 | example                              |
-| ---------------            | -----------                                                                 |
-| `&&, \|\|`                 | Boolean AND, OR                                                             |
-| `\*, +, <, >=`             | Math and comparison operators                                               |
-| `===, =!=`                 | Equality and inequality tests                                               |
-| `alias, as`                | Gives the column an alias (**as** only in Scala)                            |
-| `cast`                     | Casts the column to a different data type                                   |
+| ---------------            | -----------                                                                 |                                      |
+| `&&, \|\|`                 | Boolean AND, OR                                                             |                                      |
+| `\*, +, <, >=`             | Math and comparison operators                                               |                                      |
+| `===, =!=`                 | Equality and inequality tests                                               |                                      |
+| `alias, as`                | Gives the column an alias (**as** only in Scala)                            |                                      |
+| `cast`                     | Casts the column to a different data type                                   |                                      |
 | `isNull, isNotNull, isNan` | Is null                                                                     | `.filter($"items.coupon".isNotNull)` |
-| `asc, desc`                | Returns a sort expression based on ascending/descending order of the column |
-| `startsWith, endsWith`     | String starts/ends with "..."                                               |
-| `isInCollection`           | Test column value for membership in iterable                                |
-| `contains`                 | Test column value for containing a given other (simple strings only)        |
+| `asc, desc`                | Returns a sort expression based on ascending/descending order of the column |                                      |
+| `startsWith, endsWith`     | String starts/ends with "..."                                               |                                      |
+| `isInCollection`           | Test column value for membership in iterable                                |                                      |
+| `contains`                 | Test column value for containing a given other (simple strings only)        |                                      |
 
 ## DataFrame Transformation Methods
 
-| method                     | description                                                                                        |
+| method                     | description                                                                                        | example                    |
 | ---------------            | -----------                                                                                        |
 | `select`                   | Returns a new DataFrame by computing given expression for each element                             |
 | `drop`                     | Returns a new DataFrame with a column dropped                                                      |
 | `withColumnRenamed`        | Returns a new DataFrame with a column renamed                                                      |
 | `withColumn`               | Returns a new DataFrame by adding a column or replacing the existing column that has the same name |
 | `filter, where`            | Filters rows using the given condition                                                             |
-| `sort, orderBy`            | Returns a new DataFrame sorted by the given expressions                                            |
+| `sort, orderBy`            | Returns a new DataFrame sorted by the given expressions                                            | `df.sort($"colname".desc)` |
 | `dropDuplicates, distinct` | Returns a new DataFrame with duplicate rows removed                                                |
 | `limit`                    | Returns a new DataFrame by taking the first n rows                                                 |
 | `groupBy`                  | Groups the DataFrame using the specified columns, so we can run aggregation on them                |

@@ -79,6 +79,11 @@ val betterDF = df.filter(
 | `coalesce()`    | Returns new DF w/ exactly N partitions when N < current # partitions    |
 | `repartition()` | Returns new DF w/ exactly N partitions (but slower, requires shuffling) |
 
+Alternatively, set the default shuffle partitions to the number of cores on your cluster:
+```scala
+spark.conf.set("spark.sql.shuffle.partitions", sc.defaultParallelism)
+```
+
 ### Guidelines
 * Always err on the side of too many small partitions, rather than too few large partitions
 * But try not to let partition size increase above 200MB per 8GB of slot total memory

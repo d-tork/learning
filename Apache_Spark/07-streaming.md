@@ -38,3 +38,37 @@ val devicesQuery = emailTrafficDF.writeStream
 // ...
 devicesQuery.stop()
 ```
+
+### Listing and stopping active streams 
+```scala
+for (s <- spark.streams.active) {
+	println(s.name)
+	s.stop()
+}
+```
+
+## 4.4 Aggregating Streams
+
+### Windowing
+```scala
+streamingDF.groupBy(
+	window($"time", "1 hour"),
+	$"device"
+).count()
+```
+
+**Performance consideration**: the `groupBy` shuffles among the partitions, and each partition must
+maintain an in-memory state map in each window, in each partition. Reduce the number of partitions
+to a 1-to-1 mapping of partitions to cores in order to improve performance.
+
+### Watermarking
+Defining a cutoff point after which structured streaming is allowed to throw saved windows away. 
+Therefore late data can update aggregates of old windows as long as it's within the threshold.
+```scala
+streamingDF
+	.withWatermark("time", "2 hours")
+	.groupBy(
+		window($"time", "1 hour"),
+		$"device")
+	.count()
+```
