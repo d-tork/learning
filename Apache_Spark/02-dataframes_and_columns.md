@@ -3,14 +3,14 @@
 ## Column Operators and Methods
 https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html
 
-| operator/method            | description                                                                 |
+| operator/method            | description                                                                 | example                              |
 | ---------------            | -----------                                                                 |
 | `&&, \|\|`                 | Boolean AND, OR                                                             |
 | `\*, +, <, >=`             | Math and comparison operators                                               |
 | `===, =!=`                 | Equality and inequality tests                                               |
 | `alias, as`                | Gives the column an alias (**as** only in Scala)                            |
 | `cast`                     | Casts the column to a different data type                                   |
-| `isNull, isNotNull, isNan` | Is null                                                                     |
+| `isNull, isNotNull, isNan` | Is null                                                                     | `.filter($"items.coupon".isNotNull)` |
 | `asc, desc`                | Returns a sort expression based on ascending/descending order of the column |
 | `startsWith, endsWith`     | String starts/ends with "..."                                               |
 | `isInCollection`           | Test column value for membership in iterable                                |
