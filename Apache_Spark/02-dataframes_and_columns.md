@@ -18,17 +18,17 @@ https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html
 
 ## DataFrame Transformation Methods
 
-| method                     | description                                                                                        | example                    |
-| ---------------            | -----------                                                                                        | -------                    |
-| `select`                   | Returns a new DataFrame by computing given expression for each element                             |                            |
-| `drop`                     | Returns a new DataFrame with a column dropped                                                      |                            |
-| `withColumnRenamed`        | Returns a new DataFrame with a column renamed                                                      |                            |
-| `withColumn`               | Returns a new DataFrame by adding a column or replacing the existing column that has the same name |                            |
-| `filter, where`            | Filters rows using the given condition                                                             |                            |
-| `sort, orderBy`            | Returns a new DataFrame sorted by the given expressions                                            | `df.sort($"colname".desc)` |
-| `dropDuplicates, distinct` | Returns a new DataFrame with duplicate rows removed                                                |                            |
-| `limit`                    | Returns a new DataFrame by taking the first n rows                                                 |                            |
-| `groupBy`                  | Groups the DataFrame using the specified columns, so we can run aggregation on them                |                            |
+| method                     | description                                                                                        | example                                 |
+| ---------------            | -----------                                                                                        | -------                                 |
+| `select`                   | Returns a new DataFrame by computing given expression for each element                             | `df.select("$colname", col("colname2")` |
+| `drop`                     | Returns a new DataFrame with a column dropped                                                      |                                         |
+| `withColumnRenamed`        | Returns a new DataFrame with a column renamed                                                      |                                         |
+| `withColumn`               | Returns a new DataFrame by adding a column or replacing the existing column that has the same name |                                         |
+| `filter, where`            | Filters rows using the given condition                                                             |                                         |
+| `sort, orderBy`            | Returns a new DataFrame sorted by the given expressions                                            | `df.sort($"colname".desc)`              |
+| `dropDuplicates, distinct` | Returns a new DataFrame with duplicate rows removed                                                |                                         |
+| `limit`                    | Returns a new DataFrame by taking the first n rows                                                 |                                         |
+| `groupBy`                  | Groups the DataFrame using the specified columns, so we can run aggregation on them                |                                         |
 
 ## DataFrame Action Methods
 

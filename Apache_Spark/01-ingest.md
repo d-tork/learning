@@ -1,5 +1,14 @@
 # Spark/Scala Data Ingest
 
+## Reading by file type (in practice)
+
+| format  | example                                             |
+|---------|-----------------------------------------------------|
+| csv     | `spark.read.option("sep", ",").csv("path/to/file")` |
+| json    | `spark.read.json("path/to/file")`                   |
+| parquet | `spark.read.parquet("path/to/file")`                |
+| delta   | `spark.read.format("delta").load("path/to/file")`   |
+
 ## 1.4 Reader & Writer
 ### Read from CSV
 ```scala
@@ -128,4 +137,41 @@ for (i <- 0 to 6) {
 }
 
 bigDF.foreach(_=>())
+```
+
+# Writing to storage or tables
+
+## Convert data to Delta table
+```scala
+val deltaPath = workingDir + "/delta-events"
+eventsDF.write.format("delta").mode("overwrite").save(deltaPath)
+```
+
+## Create Delta table in the metastore
+```scala
+eventsDF.write.format("delta").mode("overwrite").saveAsTable("delta_events")
+```
+
+## Time travel with Delta Lake
+(this command uses spark.sql in order to do string substitution with `deltaPath`)
+```scala
+spark.sql(f"CREATE TABLE train_delta using DELTA LOCATION '$deltaPath'")
+```
+
+This command gives the overwrite histories of that `deltaPath`
+```sql
+DESCRIBE HISTORY train_delta
+```
+
+Access a different version of the history:
+```scala
+val df = spark.read.format("delta").option("versionAsOf", 0).load(deltaPath)
+```
+
+In order to `vacuum` (clean up) old commit histories, create a `DeltaTable` variable first:
+```scala
+import io.delta.tables._
+
+val deltaTable = DeltaTable.forPath(spark, deltaPath)
+deltaTable.vacuum(0)
 ```
