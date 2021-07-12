@@ -8,6 +8,7 @@
 | json    | `spark.read.json("path/to/file")`                   |
 | parquet | `spark.read.parquet("path/to/file")`                |
 | delta   | `spark.read.format("delta").load("path/to/file")`   |
+| xml     |                                                     |
 
 ## 1.4 Reader & Writer
 ### Read from CSV
