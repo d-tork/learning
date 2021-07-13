@@ -2,13 +2,13 @@
 
 ## Reading by file type (in practice)
 
-| format  | example                                             |
-|---------|-----------------------------------------------------|
-| csv     | `spark.read.option("sep", ",").csv("path/to/file")` |
-| json    | `spark.read.json("path/to/file")`                   |
-| parquet | `spark.read.parquet("path/to/file")`                |
-| delta   | `spark.read.format("delta").load("path/to/file")`   |
-| xml     |                                                     |
+| format  | read example                                        | write example                           |
+|---------|-----------------------------------------------------| --------------------------------------- |
+| csv     | `spark.read.option("sep", ",").csv("path/to/file")` | `df.write.format("csv").save("path")`   |
+| json    | `spark.read.json("path/to/file")`                   | `df.write.                              |
+| parquet | `spark.read.parquet("path/to/file")`                | `df.write.                              |
+| delta   | `spark.read.format("delta").load("path/to/file")`   | `df.write.format("delta").save("path")` |
+| xml     | `spark.read.format("xml").load("path/to/file")      | `df.write.                              |
 
 ## 1.4 Reader & Writer
 ### Read from CSV
