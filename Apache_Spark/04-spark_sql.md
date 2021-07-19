@@ -38,3 +38,11 @@ budgetDF.write.mode("overwrite").saveAsTable("budget_s")
 # SQL view --> spark df
 val budgetDF = spark.sql("SELECT * FROM budget")
 ```
+
+## Create and use a database other than `default`
+
+```scala
+val user_db = "my_new_database"
+spark.sql(f"CREATE DATABASE IF NOT EXISTS $user_db")
+spark.sql(f"USE $user_db")
+```
