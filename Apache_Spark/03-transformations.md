@@ -6,7 +6,7 @@ Importing built-in functions: `org.apache.spark.sql.functions._`
 See [this StackOverflow answer](https://stackoverflow.com/questions/45131481/how-to-use-collect-set-and-collect-list-functions-in-windowed-aggregation-in-spa) for using `Window.partitionBy`
 
 ### Grouped Data Operations
-Where `groupBy` takes a column name as string, not a column itself, e.g. `$"colname"` or `col("colname")
+Where `groupBy` takes a column name as string, not a column itself, e.g. `$"colname"` or `col("colname")`
 
 | command          | description                                                                     |
 | ---------------- | -----------                                                                     |
