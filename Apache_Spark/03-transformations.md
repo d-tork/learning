@@ -72,6 +72,21 @@ df.groupBy("some_col").agg(
 	)
 ```
 
+### Calculating median
+[SO 41431270](https://stackoverflow.com/a/41433825/8472786)
+[SO 41404041](https://stackoverflow.com/a/41405771/8472786)
+
+```scala
+# scala
+df.createOrReplaceTempView("df")
+spark.sql("select id, percentile_approx(val, 0.5) as median from df group by id")
+```
+or
+```python
+# python
+df.approxQuantile("val", [0.5], 0.25)
+```
+
 ## 2.2 [Datetimes](https://spark.apache.org/docs/latest/sql-ref-datetime-pattern.html)
 Based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/10/docs/api/java/time/format/DateTimeFormatter.html)
 
