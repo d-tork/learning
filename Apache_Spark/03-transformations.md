@@ -20,17 +20,17 @@ Where `groupBy` takes a column name as string, not a column itself, e.g. `$"coln
 | `sum`            | Sum for each numeric column for each group                                      |
 
 ### Aggregate functions
-| function                | description                                                        |
-| ----------------        | -----------                                                        |
-| `approx_count_distinct` | Returns the approximate number of distinct items in a group        |
-| `avg`                   | Returns the average of the values in a group                       |
-| `collect_list`          | Returns a list of objects with duplicates                          |
-| `corr`                  | Returns the Pearson Correlation Coefficient for two columns        |
-| `max`                   |                                                                    |
-| `mean`                  |                                                                    |
-| `stddev_samp`           | Returns the sample standard deviation of the expression in a group |
-| `sumDistinct`           | Returns the sum of distinct values in the expression               |
-| `var_pop`               | Returns the population variance of the values in a  group          |
+| function                | description                                                        | quick use |
+| ----------------        | -----------                                                        | --------- |
+| `approx_count_distinct` | Returns the approximate number of distinct items in a group        | `df.agg(approx_count_distinct("colname"))` |
+| `avg`                   | Returns the average of the values in a group                       | |
+| `collect_list`          | Returns a list of objects with duplicates                          | |
+| `corr`                  | Returns the Pearson Correlation Coefficient for two columns        | |
+| `max`                   |                                                                    | |
+| `mean`                  |                                                                    | |
+| `stddev_samp`           | Returns the sample standard deviation of the expression in a group | |
+| `sumDistinct`           | Returns the sum of distinct values in the expression               | |
+| `var_pop`               | Returns the population variance of the values in a  group          | |
 
 ### Math functions
 | function         | description                                                                           |
