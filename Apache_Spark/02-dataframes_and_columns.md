@@ -82,6 +82,13 @@ val android = eventsDF.where("device = 'Android'")
 val items = Seq("item1", "item2")
 val filtered = df.filter($"col".isin(items:_*))  //or
 val filtered = df.filter($"col".isInCollection(items))
+
+// create a new column of values based on list membership
+import org.apache.spark.sql.functions.{when}
+
+df.withColumn("_error_ssn_format", 
+	when(col("sales_rep_ssn").contains("-"), True)
+	.otherwise(False))
 ```
 
 ### Filtering strings (handling case-sensitivity)
