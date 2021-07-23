@@ -176,3 +176,25 @@ import io.delta.tables._
 val deltaTable = DeltaTable.forPath(spark, deltaPath)
 deltaTable.vacuum(0)
 ```
+
+## Downloading data from the web
+Using the CMU Insider Threat data as an example, it comes as a .tar.bz2 with several CSVs inside
+
+Get the file, outputting to STDOUT, pipe it to tar and extract to the temp folder. All its top-level
+contents will now be in /tmp/
+```
+%sh
+wget -O- https://kilthub.cmu.edu/ndownloader/files/24857825 | tar -xjv -C /tmp/
+```
+Then with a filesystem command, copy the folder containing the data to DBFS (renaming, in this case)
+```
+%fs cp -r file:/tmp/r1 dbfs:/cmu_insider_threat
+```
+By default, the `spark.read` command looks to DBFS
+```scala
+val device = spark.read
+  .option("sep", ",")
+  .option("inferSchema", true)
+  .option("header", true)
+  .csv("/cmu_insider_threat/device.csv")
+```
