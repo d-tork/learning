@@ -83,7 +83,7 @@ val items = Seq("item1", "item2")
 val filtered = df.filter($"col".isin(items:_*))  //or
 val filtered = df.filter($"col".isInCollection(items))
 
-// create a new column of values based on list membership
+// create a new column of assigned values based on boolean logic
 import org.apache.spark.sql.functions.{when}
 
 df.withColumn("_error_ssn_format", 
