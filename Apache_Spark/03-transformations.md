@@ -98,7 +98,7 @@ Based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/10/docs/api
 | `date_add`       | Returns the date that is the given number of days after startDate                                    |
 | `from_unixtime`  | Converts unixtime (seconds) to a string timestamp                                                    |
 | `minute`\*       | Extracts minutes as an integer from a given date/timestamp/string                                    |
-| `dayofweek`      | Extracts the day of the month as an integer from a given date/timestamp/string                       |
+| `dayofweek`      | Extracts the day of the week as an integer from a given date/timestamp/string where Sun = 1          |
 | `unix_timestamp` | Converts timestring with given pattern to Unix timestamp (in seconds)                                |
 
 \* Extraction methods exist for `year`, `month`, `second`, etc.
