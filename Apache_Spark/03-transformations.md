@@ -183,6 +183,23 @@ val unionDF = mattressDF.unionByName(pillowDF)
 	.drop("details")
 ```
 
+If the dataframes have different columns and you want to fill with nulls, you must first match their
+schemas, then union ([SO 39758045](https://stackoverflow.com/a/39758966/8472786))
+```scala
+val cols1 = df1.columns.toSet
+val cols2 = df2.columns.toSet
+val colsCombined = cols1 ++ cols2
+
+def expr(myCols: Set[String], allCols: Set[String]) = {
+  allCols.toList.map(x => x match {
+    case x if myCols.contains(x) => col(x)
+    case _ => lit(null).as(x)
+  })
+}
+
+val df3 = df1.select(expr(cols1, colsCombined):_*).unionAll(df2.select(expr(cols2, colsCombined):_*))
+```
+
 ## 2.4 Joins
 
 **Note**: to access DataFrameNaFunctions like `drop`, `fill`, `replace`, you must use `.na` as the
