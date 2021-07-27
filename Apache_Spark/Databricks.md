@@ -36,3 +36,34 @@ get cluster id from your notebook url or the command line:
 ```
 databricks clusters get --cluster-name cli-demo
 ```
+
+## Exporting a notebook via CLI
+Say you've just edited a notebook, and want to update the .dbc file
+```
+databricks workspace export -o /cli-demo/weather-wheel weather-wheel.py
+
+# -o for overwrite
+# /cli-demo/weather-wheel is the notebook in the workspace
+# weather-wheel.py is the file you are writing to
+```
+
+## Working with clusters
+```
+$ databricks clusters list
+$ databricks clusters start --cluster-id 1112-123456-mains123
+$ databricks jobs list
+$ databricks jobs get --job-id 2  # returns a JSON describing the job
+```
+
+Jobs can be defined via JSON, pointing to a notebook in the workspace, 
+specifying parameters, timeout, the cluster id, etc.
+
+```
+$ databricks jobs run-now --job-id 2
+{
+  "run_id": 3,
+  "number_in_job": 1
+}
+$ databricks runs get-output --run-id 3
+$ databricks clusters delete --cluster-id 1112-123456-mains123  # terminates
+```
