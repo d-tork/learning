@@ -1,3 +1,25 @@
+# Databricks
+Cookbook for notebook interaction, DBFS, etc.
+
+## Accessing DBFS
+### Notebooks
+```
+%fs ls /mnt/training-data
+
+%sh ls /tmp/testing
+```
+```python
+dbutils.fs.ls('mnt/training-data')
+```
+
+### CLI/API
+Use commands similar to Unix command line
+```
+dbfs cp -r test-dir dbfs:/test-dir
+dbfs cp test.txt dbfs:/test.txt
+```
+----
+
 # Databricks CLI
 ```
 $ pip3 install databricks-cli
