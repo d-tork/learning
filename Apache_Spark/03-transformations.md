@@ -6,7 +6,7 @@ Importing built-in functions: `org.apache.spark.sql.functions._`
 See [this StackOverflow answer](https://stackoverflow.com/questions/45131481/how-to-use-collect-set-and-collect-list-functions-in-windowed-aggregation-in-spa) for using `Window.partitionBy`
 
 ### Grouped Data Operations
-Where `groupBy` takes a column name as string, not a column itself, e.g. `$"colname"` or `col("colname")
+Where `groupBy` takes a column name as string, not a column itself, e.g. `$"colname"` or `col("colname")`
 
 | command          | description                                                                     |
 | ---------------- | -----------                                                                     |
@@ -20,17 +20,17 @@ Where `groupBy` takes a column name as string, not a column itself, e.g. `$"coln
 | `sum`            | Sum for each numeric column for each group                                      |
 
 ### Aggregate functions
-| function                | description                                                        |
-| ----------------        | -----------                                                        |
-| `approx_count_distinct` | Returns the approximate number of distinct items in a group        |
-| `avg`                   | Returns the average of the values in a group                       |
-| `collect_list`          | Returns a list of objects with duplicates                          |
-| `corr`                  | Returns the Pearson Correlation Coefficient for two columns        |
-| `max`                   |                                                                    |
-| `mean`                  |                                                                    |
-| `stddev_samp`           | Returns the sample standard deviation of the expression in a group |
-| `sumDistinct`           | Returns the sum of distinct values in the expression               |
-| `var_pop`               | Returns the population variance of the values in a  group          |
+| function                | description                                                        | quick use |
+| ----------------        | -----------                                                        | --------- |
+| `approx_count_distinct` | Returns the approximate number of distinct items in a group        | `df.agg(approx_count_distinct("colname"))` |
+| `avg`                   | Returns the average of the values in a group                       | |
+| `collect_list`          | Returns a list of objects with duplicates                          | |
+| `corr`                  | Returns the Pearson Correlation Coefficient for two columns        | |
+| `max`                   |                                                                    | |
+| `mean`                  |                                                                    | |
+| `stddev_samp`           | Returns the sample standard deviation of the expression in a group | |
+| `sumDistinct`           | Returns the sum of distinct values in the expression               | |
+| `var_pop`               | Returns the population variance of the values in a  group          | |
 
 ### Math functions
 | function         | description                                                                           |
@@ -72,6 +72,21 @@ df.groupBy("some_col").agg(
 	)
 ```
 
+### Calculating median
+[SO 41431270](https://stackoverflow.com/a/41433825/8472786)
+[SO 41404041](https://stackoverflow.com/a/41405771/8472786)
+
+```scala
+# scala
+df.createOrReplaceTempView("df")
+spark.sql("select id, percentile_approx(val, 0.5) as median from df group by id")
+```
+or
+```python
+# python
+df.approxQuantile("val", [0.5], 0.25)
+```
+
 ## 2.2 [Datetimes](https://spark.apache.org/docs/latest/sql-ref-datetime-pattern.html)
 Based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/10/docs/api/java/time/format/DateTimeFormatter.html)
 
@@ -83,7 +98,7 @@ Based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/10/docs/api
 | `date_add`       | Returns the date that is the given number of days after startDate                                    |
 | `from_unixtime`  | Converts unixtime (seconds) to a string timestamp                                                    |
 | `minute`\*       | Extracts minutes as an integer from a given date/timestamp/string                                    |
-| `dayofweek`      | Extracts the day of the month as an integer from a given date/timestamp/string                       |
+| `dayofweek`      | Extracts the day of the week as an integer from a given date/timestamp/string where Sun = 1          |
 | `unix_timestamp` | Converts timestring with given pattern to Unix timestamp (in seconds)                                |
 
 \* Extraction methods exist for `year`, `month`, `second`, etc.
@@ -166,6 +181,23 @@ val mattressDF = mattressDF.withColumn("size", element_at(col("details"), 2))
 ```scala
 val unionDF = mattressDF.unionByName(pillowDF)
 	.drop("details")
+```
+
+If the dataframes have different columns and you want to fill with nulls, you must first match their
+schemas, then union ([SO 39758045](https://stackoverflow.com/a/39758966/8472786))
+```scala
+val cols1 = df1.columns.toSet
+val cols2 = df2.columns.toSet
+val colsCombined = cols1 ++ cols2
+
+def expr(myCols: Set[String], allCols: Set[String]) = {
+  allCols.toList.map(x => x match {
+    case x if myCols.contains(x) => col(x)
+    case _ => lit(null).as(x)
+  })
+}
+
+val df3 = df1.select(expr(cols1, colsCombined):_*).unionAll(df2.select(expr(cols2, colsCombined):_*))
 ```
 
 ## 2.4 Joins
