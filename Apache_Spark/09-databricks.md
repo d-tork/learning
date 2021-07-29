@@ -56,13 +56,13 @@ $ databricks libraries install --cluster-id 1112-123456-mains123 \
 ```
 get cluster id from your notebook url or the command line:
 ```
-databricks clusters get --cluster-name cli-demo
+$ databricks clusters get --cluster-name cli-demo
 ```
 
 ## Exporting a notebook via CLI
 Say you've just edited a notebook, and want to update the .dbc file
 ```
-databricks workspace export -o /cli-demo/weather-wheel weather-wheel.py
+$ databricks workspace export -o /cli-demo/weather-wheel weather-wheel.py
 
 # -o for overwrite
 # /cli-demo/weather-wheel is the notebook in the workspace
