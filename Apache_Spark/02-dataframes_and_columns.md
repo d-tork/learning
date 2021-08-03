@@ -82,13 +82,6 @@ val android = eventsDF.where("device = 'Android'")
 val items = Seq("item1", "item2")
 val filtered = df.filter($"col".isin(items:_*))  //or
 val filtered = df.filter($"col".isInCollection(items))
-
-// create a new column of assigned values based on boolean logic
-import org.apache.spark.sql.functions.{when}
-
-df.withColumn("_error_ssn_format", 
-	when(col("sales_rep_ssn").contains("-"), True)
-	.otherwise(False))
 ```
 
 ### Filtering strings (handling case-sensitivity)
@@ -122,6 +115,16 @@ val pattern = "[A-Z]{4}-[A-Z]{2}-\w+".r		//ERROR invalid escape character \w
 val pattern = "[A-Z]{4}-[A-Z]{2}-\w+"		//ERROR invalid escape character \w
 val pattern = """[A-Z]{4}-[A-Z]{2}-\w+""".r  	//a Regex (triple quotes)
 val pattern = "[A-Z]{4}-[A-Z]{2}-\\w+".r  	//a Regex (escaped \w)
+```
+
+## Assigning values to a column based on boolean logic
+```scala
+// create a new column of assigned values based on boolean logic
+import org.apache.spark.sql.functions.{when}
+
+df.withColumn("_error_ssn_format", 
+	when(col("sales_rep_ssn").contains("-"), True)
+	.otherwise(False))
 ```
 
 ## Duplicates and Sorting
