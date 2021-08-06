@@ -176,6 +176,10 @@ Pick out items from an array
 val mattressDF = mattressDF.withColumn("size", element_at(col("details"), 2))
 						   .withColumn("quality", element_at(col("details"), 1))
 ```
+but `element_at` is not available prior to Spark 2.4.0, so use `getItem()` instead:
+```
+mattressDF.select($"details".getItem(2).alias("size"))
+```
 
 ### Union two dataframes
 ```scala
