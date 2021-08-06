@@ -72,6 +72,40 @@ df.groupBy("some_col").agg(
 	)
 ```
 
+### Pivoting
+#### [Pivoting without aggregation](https://stackoverflow.com/a/53859567/8472786)
+
+> There isn't a good way to pivot without aggregating in Spark, basically it
+> assumes that you would just use a OneHotEncoder for that functionality, but
+> that lacks the human readability of a straight pivot.
+
+```scala
+// from this
++-----------+------------+-----+
+|country_id3|indicator_id|value|
++-----------+------------+-----+
+|        ABC|           a|    7|
+|        ABC|           b|    8|
+|        POL|           a|    9|
+|        POL|           b|    7|
++-----------+------------+-----+
+
+val pivot = countryKPI
+  .groupBy("country_id3", "value")
+  .pivot("indicator_id", Seq("a", "b"))  // unique vals enumerated for performance
+  .agg(first(col("indicator_id")))
+
+pivot.show
++-----------+-----+----+----+
+|country_id3|value|   a|   b|
++-----------+-----+----+----+
+|        ABC|    8|null|   b|
+|        POL|    9|   a|null|
+|        POL|    7|null|   b|
+|        ABC|    7|   a|null|
++-----------+-----+----+----+
+```
+
 ### Calculating median
 [SO 41431270](https://stackoverflow.com/a/41433825/8472786)
 [SO 41404041](https://stackoverflow.com/a/41405771/8472786)
