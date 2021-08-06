@@ -89,3 +89,18 @@ $ databricks jobs run-now --job-id 2
 $ databricks runs get-output --run-id 3
 $ databricks clusters delete --cluster-id 1112-123456-mains123  # terminates
 ```
+
+## Secrets in a notebook
+[From blah blah](https://docs.databricks.com/applications/machine-learning/feature-store.html)
+```python
+from databricks.feature_store.online_store_spec import AmazonRdsMySqlSpec
+def getSecret(key, scope='feature-store'):
+	return dbutils.secrets.get(scope, key)
+
+hostname = getSecret('hostname')
+port = int(getSecret('port'))		# they're likely all forced strings
+user = getSecret(key='user')
+password = getSecret(key='password')
+
+online_store = AmazonRdsMySqlSpec(hostname, port, user, password)
+```
