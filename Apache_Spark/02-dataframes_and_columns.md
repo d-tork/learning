@@ -43,6 +43,8 @@ https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html
 | `take`              | Returns an array of the first n rows in the DataFrame     |
 
 ### Subselecting and aliasing columns
+In Spark (with either Python, Scala, or R) the best practice is to write column expressions with a select statement. Chaining
+`withColumn` functions should be avoided as each operation causes a recalculation of the optimal query plan on execution.
 ```scala
 import org.apache.spark.sql.functions.col
 
@@ -57,6 +59,7 @@ val anonymousDF = eventsDF.drop("user_id", "geo", "device")
 ```
 
 ### Add or replace columns
+(but avoid this syntax when possible)
 ```scala
 val mobileDF = eventsDF.withColumn("mobile", col("device").isin("iOS", "Android"))
 ```
