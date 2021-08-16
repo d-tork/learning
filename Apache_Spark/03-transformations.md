@@ -299,4 +299,12 @@ salesDF.createOrReplaceTempView("sales")
 SELECT sql_udf(email) AS firstLetter FROM sales
 ```
 
+## Structured Streaming and Windows
+[PySpark documentation on `window()`](http://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.functions.window.html)
 
+```scala
+val eventsPerHour = rawDF.
+	groupBy($"username", window($"ts", "1 hour").agg(
+		count(lit(1)).alias("event_count"))
+eventsPerHour.sort($"window").show()
+```
