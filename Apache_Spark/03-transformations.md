@@ -73,6 +73,8 @@ df.groupBy("some_col").agg(
 ```
 
 ### Pivoting
+General pivoting is explained well in [this Databricks blog](https://databricks.com/blog/2016/02/09/reshaping-data-with-pivot-in-apache-spark.html)
+
 #### [Pivoting without aggregation](https://stackoverflow.com/a/53859567/8472786)
 
 > There isn't a good way to pivot without aggregating in Spark, basically it
@@ -247,6 +249,9 @@ val df3 = df1.select(expr(cols1, colsCombined):_*).unionAll(df2.select(expr(cols
 
 **Note**: to access DataFrameNaFunctions like `drop`, `fill`, `replace`, you must use `.na` as the
 accessor on the dataframe object. 
+```scala
+val dfWithoutNulls = salesDF.na.fill(0)
+```
 
 Drop duplicates from a selected column and add a dummy column
 ```scala
