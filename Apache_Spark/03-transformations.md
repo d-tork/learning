@@ -313,3 +313,30 @@ val eventsPerHour = rawDF.
 		count(lit(1)).alias("event_count"))
 eventsPerHour.sort($"window").show()
 ```
+
+For interpolation of missing values, use `lag()` and `lead()` to get the values
+recorded before and after. In the `interpolatedDF`, each row--including the 
+negative values--has the previous and next values available to it for 
+calculating the average. However, it seems possible that either the prev or 
+next value could be coming from a different device. 
+```python
+from pyspark.sql.window import Window
+from pyspark.sql.functions import col, lag, lead
+
+dateWindow = Window.orderBy('p_eventdate')
+
+interpolatedDF = spark.read.table('health_tracker_plus_silver').select(
+	'*',
+	lag(col('heartrate')).over(dateWindow).alias('prev_amt'),
+	lead(col('heartrate')).over(dateWindow).alias('next_amt')
+)
+
+# Now to average the two to fill bad values (negative heartrates)
+updatesDF = interpolatedDF.where(col('heartrate') < 0).select(
+	'device_id',
+	((col('prev_amt') + col('next_amt')) / 2).alias('heartrate'),
+	'eventtime',
+	'name',
+	'p_eventdate'
+)
+```
