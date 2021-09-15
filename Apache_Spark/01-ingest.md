@@ -5,8 +5,8 @@
 | format    | read example                                          | write example                           |
 | --------- | ----------------------------------------------------- | --------------------------------------- |
 | csv       | `spark.read.option("sep", ",").csv("path/to/file")`   | `df.write.format("csv").save("path")`   |
-| json      | `spark.read.json("path/to/file")`                     | `df.write.`                             |
-| parquet   | `spark.read.parquet("path/to/file")`                  | `df.write.`                             |
+| json      | `spark.read.json("path/to/file")`                     | TODO                                    |
+| parquet   | `spark.read.parquet("path/to/file")`                  | TODO                                    |
 | delta     | `spark.read.format("delta").load("path/to/file")`     | `df.write.format("delta").save("path")` |
 | xml       | `spark.read.format("xml").load("path/to/file")`       | why would you?                          |
 
@@ -25,12 +25,21 @@ usersDF.printSchema()
 
 ### Read from JSON
 ```scala
+// Without schema
 val eventsJsonPath = "/mnt/training/ecommerce/events/events-500k.json"
 val eventsDF = spark.read
 	.option("inferSchema", true)
 	.json(eventsJsonPath)
 
 eventsDF.printSchema()
+```
+
+```scala
+// With schema
+val jsonSchema = "device_id INTEGER, heartrate DOUBLE, name STRING, time FLOAT"
+val silver_health_tracker = bronzeDF.select(
+	from_json($"value", jsonSchema).alias("nested_json")
+	).select("nested_json.*")
 ```
 
 ### Read from multiple paths
