@@ -1,4 +1,4 @@
-# Command line
+# Bash / Command line
 
 ## Searching files by contents
 ```bash
@@ -60,4 +60,34 @@ gpg --export -a "Your Name" > your.key
 Then encrypt for them:
 ```bash
 gpg -e -u "Your Name" -r "Their Name" test.txt
+```
+
+## How to run a script in the background
+
+Add `&` after the command
+```bash
+./test.sh &
+
+./test.sh > /dev/null 2>&1 &
+./test.sh > outfile.log 2>&1 &
+```
+_Note: `2>&1` means standard error is redirected to standard output. And since
+standard output has been redirected to outfile.log in the example, stderr also
+goes there._
+
+Use the linux **nohup** command, which is not affected by closing the terminal
+```bash
+nohup ./test.sh > dev/null 2>&1 &
+```
+
+Use the linux **setsid** command
+```bash
+setsid ./test.sh > dev/null 2>&1 &
+```
+
+## How to find your job running
+```bash
+jobs
+
+ps -ef | grep "test.sh" | grep -v grep
 ```
