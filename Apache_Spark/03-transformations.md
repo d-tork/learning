@@ -171,6 +171,7 @@ val formattedDF = timestampDF.withColumn("date_string", date_format(col("timesta
 ```scala
 df.filter(to_date($"someTimeStamp") === "2020-01-01")
 ```
+However, _don't_ filter a date string (i.e. one that results from a `date_format()`).
 
 ## 2.3 Complex Types
 
