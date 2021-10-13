@@ -254,6 +254,14 @@ accessor on the dataframe object.
 val dfWithoutNulls = salesDF.na.fill(0)
 ```
 
+To fill one columns's nulls with values from another column, use `coalesce`:
+```python
+# python
+from pyspark.sql.functions import coalesce
+    
+df.withColumn("B",coalesce(df.B,df.A))  # fills nulls in B with vals from A
+```
+
 Drop duplicates from a selected column and add a dummy column
 ```scala
 val convertedUsersDF = salesDF
