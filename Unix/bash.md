@@ -91,3 +91,10 @@ jobs
 
 ps -ef | grep "test.sh" | grep -v grep
 ```
+
+## Sorting `du` by size
+```bash
+du -hs * | sort -hr
+```
+Where `du -hs` is human-readable and summarized, `*` is all the items in the current directory, 
+and `sort -hr` is human-numeric-sort (i.e. between 2K and 1G) and in descending order.
