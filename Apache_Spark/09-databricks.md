@@ -104,3 +104,25 @@ password = getSecret(key='password')
 
 online_store = AmazonRdsMySqlSpec(hostname, port, user, password)
 ```
+
+## Replacing a Delta table with a different schema
+Only a fool goes and runs `%fs rm` on the Delta files, drops tables, and recreates them. Databricks
+[has a lot to say](https://docs.databricks.com/delta/best-practices.html#replace-the-content-or-schema-of-a-table)
+about why that's wrong.
+
+The better way (for external table): 
+```python
+# python
+dataframe.write \
+  .format("delta") \
+  .mode("overwrite") \
+  .option("overwriteSchema", "true") \
+  .option("path", "<your-table-path>") \
+  .partitionBy(<your-partition-columns>) \
+  .saveAsTable("<your-table>")
+```
+```sql
+-- sql
+REPLACE TABLE <your-table> USING DELTA PARTITIONED BY (<your-partition-columns>) LOCATION "<your-table-path>" AS SELECT ...
+
+```
