@@ -6,6 +6,12 @@ grep -rnw '/path/to/somewhere/' -e 'pattern'
 ```
 where `-r` is recursive, `-n` is line number, and `-w` matches the whole word
 
+## Searching _for_ a file by name pattern
+```
+find . type f -name "*.tex"
+```
+> Traverse current directory (and subdirectories) for regular files that end in "tex".
+
 ## Encrypting with GPG (`gnupg`)
 Based on [multiple](https://linuxconfig.org/how-to-encrypt-and-decrypt-individual-files-with-gpg/)
 [articles](https://linuxconfig.org/how-to-create-compressed-encrypted-archives-with-tar-and-gpg/)
