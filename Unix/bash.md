@@ -104,3 +104,23 @@ du -hs * | sort -hr
 ```
 Where `du -hs` is human-readable and summarized, `*` is all the items in the current directory, 
 and `sort -hr` is human-numeric-sort (i.e. between 2K and 1G) and in descending order.
+
+## Command / Parameter expansion
+from https://guide.bash.academy/expansions/
+
+Parameter expansions (and all other value expansions) should **always** be double-quoted.
+```bash
+"the contents of the file are $(cat myfile.txt)"
+
+contents="$(cat myfile.txt)"
+```
+
+Curly braces wrapped around parameter names are optional, but allow you to apply some formatting:
+```bash
+$ time=23.73
+$ echo "current record is ${time%.*} seconds and ${time#*.} hundreths."
+current record is 23 seconds and 73 hundredths.
+
+$ echo "PATH currently contains: ${PATH//:/, }"
+PATH currently contains: /Users/lhunath/.bin, /usr/local/bin, /usr/bin, /bin, /usr/libexec
+```
