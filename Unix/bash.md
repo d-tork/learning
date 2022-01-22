@@ -124,3 +124,12 @@ current record is 23 seconds and 73 hundredths.
 $ echo "PATH currently contains: ${PATH//:/, }"
 PATH currently contains: /Users/lhunath/.bin, /usr/local/bin, /usr/bin, /bin, /usr/libexec
 ```
+
+## Truncate very wide output
+Sometimes the output is too wide for the terminal and it wraps, causing ugly line breaks and 
+spacing (e.g., `docker ps` when a container has a lot of port mappings).
+```bash
+docker ps | less -S
+```
+
+For docker specifically, `ps` [can be formatted](./Docker.md).
