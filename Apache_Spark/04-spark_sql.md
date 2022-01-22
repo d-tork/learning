@@ -46,3 +46,26 @@ val user_db = "my_new_database"
 spark.sql(f"CREATE DATABASE IF NOT EXISTS $user_db")
 spark.sql(f"USE $user_db")
 ```
+
+## Using variables in SQL code
+Ordinarily, you would need to use Python or Scala context in order to do string formatting / 
+variable substitution in a SQL command, like so:
+
+```python
+myvar = 'mytable'
+spark.sql(f"CREATE TABLE mytable USING DELTA LOCATION '/path/to/{myvar}'")
+```
+
+However, using widgets, you can specify what value you want to insert:
+
+```python
+# python
+
+myvar = 'mytable'
+dbutils.widgets.text('tablename', myvar)
+```
+```sql
+-- sql 
+
+CREATE TABLE mytable USING DELTA LOCATION "/path/to/$myvar"
+```
