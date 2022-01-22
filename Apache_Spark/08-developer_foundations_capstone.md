@@ -6,6 +6,7 @@ registration ID: 2425327
 * set issue field to "Training"
 * set subject field to "Developers Fundamentals Capstone"
 
+```python
 batch_2019 = (batch_2019
               .withColumnRenamed('orderId', 'order_id')
               .withColumnRenamed('customerId', 'customer_id')
@@ -35,6 +36,7 @@ productsDF = (productsDF
               .withColumn('price', col('price.usd'))
               .filter(col('price').isNotNull())
              )
+```
 
 ```python
 stream_df = (stream_df
