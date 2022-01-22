@@ -68,8 +68,17 @@ Then encrypt for them:
 gpg -e -u "Your Name" -r "Their Name" test.txt
 ```
 
-## How to run a script in the background
+## Preview a CSV file
+Works well for _very_ large files
+```bash
+head data.csv | column -s ',' -tn
+```
+Or to page through it:
+```bash
+column -s ',' -tn < data.csv | less -#2 -N -S
+```
 
+## How to run a script in the background
 Add `&` after the command
 ```bash
 ./test.sh &
