@@ -11,13 +11,13 @@ Given a new project and being shared Gary's Into-hdp project for access to his V
     - Region: `us-east4` (Northern Virginia)
     - Zone: `us-east4-c`
 
-    ![Set name and zone](img/vmsetup-01a-region.png)
+    ![Set name and zone](../.img/vmsetup-01a-region.png)
 2. Machine configuration
     - General-purpose
     - Series: `N1`
     - Machine type: `Custom`, 6-8 cores, 39GB memory
 
-    ![Create instance](img/vmsetup-01b-machine.png)
+    ![Create instance](../.img/vmsetup-01b-machine.png)
 3. Boot disk
     - **Change**
     - **Custom images** > Show image from: `Into-hdp`
@@ -25,16 +25,16 @@ Given a new project and being shared Gary's Into-hdp project for access to his V
     - Boot disk type: `standard persistent disk`
     - Size (GB): `32` (depends on your usage)
 
-    ![Boot disk](img/vmsetup-02-boot_disk.png)
+    ![Boot disk](../.img/vmsetup-02-boot_disk.png)
 4. Click to show more **Management, security, disks, networking, sole tenancy**
 5. Management
     - Preemptibility: `On`
 
-    ![Preemptibility](img/vmsetup-03-preemptibility.png)
+    ![Preemptibility](../.img/vmsetup-03-preemptibility.png)
 6. Networking
     - Hostname: `hdp3.c.test`
 
-    ![Hostname](img/vmsetup-04-hostname.png)
+    ![Hostname](../.img/vmsetup-04-hostname.png)
 7. **Create**
 
 
@@ -44,18 +44,18 @@ Given a new project and being shared Gary's Into-hdp project for access to his V
 1. Select your own project (not Into-hdp, that's just for access to the VM image during setup)
 2. Go to **Compute Engine > VM instances**, select `hdp3a`, and click **Start**
 
-![Start up VM](img/vm-01-start.png)
+![Start up VM](../.img/vm-01-start.png)
 
 3. (Windows/Mac) Start a cloud shell by clicking the icon in the upper right corner
 
-![Start cloud shell](img/vm-02-cloud_shell.png)
+![Start cloud shell](../.img/vm-02-cloud_shell.png)
 
 4. Connect to the vm with one of the `gcloud` commands below
     * This step must be done in the browser cloud shell on macOS (and probably Windows),  but in Linux it can be run in any shell.
 5. (Windows/Mac) To open Ambari dashboard, click the web preview button in the upper right of the console window, then **Preview on port 8080**
     * (Linux) go directly to `localhost:8080` in a browser (or whichever port you need)
 
-![Web preview](img/vm-03-preview_port.png)
+![Web preview](../.img/vm-03-preview_port.png)
 
 ---
 
@@ -147,9 +147,9 @@ For managing services (HDFS, Hive, Spark, Zeppelin, etc.)
 but with a different number between the `dot`s
     * When asked for a login, use "admin" for both
 3. Click `...` next to **Services** and choose **Start All**
-    * ![Start All services](img/ambari-01-start_all.png)
+    * ![Start All services](../.img/ambari-01-start_all.png)
 4. Wait for services to start (should take about 6-7 minutes)
-    * ![Background operations progress](img/ambari-02-progress.png)
+    * ![Background operations progress](../.img/ambari-02-progress.png)
 
 ## Other services on different ports
 * replace `8080` in the URL above used to access Ambari with the port you want to preview.
