@@ -72,7 +72,7 @@ for i in * ; do tar -cvzf - "$i" | gpg > "$
 First, get your recipient's public key from them and import it. Also send them _your_ public key.
 ```bash
 gpg --import yourfriends.key
-gpg --export -a "Your Name" > your.key
+gpg --output mygpgkey_pub.gpg --armor --export 'Your Name'
 ```
 Then encrypt for them:
 ```bash
