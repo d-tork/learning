@@ -6,11 +6,22 @@ grep -rnw '/path/to/somewhere/' -e 'pattern'
 ```
 where `-r` is recursive, `-n` is line number, and `-w` matches the whole word
 
+Or more often, a quick search of the current directory:
+```bash
+grep -ir 'my text' .
+```
+
 ## Searching _for_ a file by name pattern
 ```
 find . type f -name "*.tex"
 ```
 > Traverse current directory (and subdirectories) for regular files that end in "tex".
+
+## Finding filenames that match a pattern
+```bash
+find /data -type f -name '*.csv' -size -2k  
+# (that are smaller than 2KB)
+```
 
 ## Encrypting with GPG (`gnupg`)
 Based on [multiple](https://linuxconfig.org/how-to-encrypt-and-decrypt-individual-files-with-gpg/)
@@ -142,3 +153,56 @@ docker ps | less -S
 ```
 
 For docker specifically, `ps` [can be formatted](./Docker.md).
+
+## Directly pass a file to a command
+Instead of piping the output of a file with `cat` to another command (which runs an additional
+process)
+```bash
+$ cat greeting.txt | wc -w
+```
+pass it directly:
+```bash
+$ < greeting.txt wc -w
+```
+
+## Pipe intermediate output at any time
+`tee` inserted will still pass stdout to the next step in the pipeline.
+```bash
+seq 0 2 100 | tee even.txt | trim 5
+```
+
+## Pass your secret keys from file via command substitution
+```bash
+curl -s "http://newsapi.org/v2/everything?q=linux&apiKey=$(< /data/.secret/newsapi.org_apikey)"
+```
+
+## Edit previous command(s) with `fc`
+Ensure your editor is set with `FCEDIT=vim`. List the commands first to get their number, or else
+specify a negative number to walk backwards.
+```
+$ fc -l
+10175  vim ~/.bash_profile
+10176  config st
+10177  config diff
+10178* config st
+10179* config add .vimrc
+
+$ fc 10175
+```
+
+## Looping through lines in a file
+```bash
+# Setup
+curl -s "https://randomuser.me/api/1.2/?results=5&seed=dsatcl2e" |
+jq -r '.results[].email' > emails
+
+while read line
+do
+echo "Sending invitation to ${line}."
+done < emails
+```
+
+## Misc.
+`alias` can be run to see all available aliases
+
+`seq 5` prints an incrementing list of numbers up to five, `dseq 5` does the same but with dates.
