@@ -91,7 +91,7 @@ $ gcloud compute ssh --ssh-flag="-L 8080:localhost:8080
 ### Running various services/programs
 
 #### General steps
-1. root into application (to get `you@app $` prompt)
+1. log in as application (to get `app@hostname $` prompt)
 2. run application
 3. exit app and login before attempting another
 
