@@ -1,0 +1,11 @@
+*.sw*
+*.pdf
+
+Databricks/
+!*.md
+
+Quarantine_summary/
+!*.tex
+
+Naval_s Mind/
+Coursera/
