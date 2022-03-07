@@ -206,3 +206,6 @@ done < emails
 `alias` can be run to see all available aliases
 
 `seq 5` prints an incrementing list of numbers up to five, `dseq 5` does the same but with dates.
+
+## Bash history
+[Great Digital Ocean article](https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps) on using bash history and setting up how it's appended to.
