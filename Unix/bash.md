@@ -209,3 +209,33 @@ done < emails
 
 ## Bash history
 [Great Digital Ocean article](https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps) on using bash history and setting up how it's appended to.
+
+### Get bash history into vim for use elsewhere
+```bash
+history | vim -
+```
+But this doesn't allow you to edit and write back to history to modify commands.
+
+### Recalling historic command for editing first
+To request a command be printed rather than executed after history substitution, add the `:p` 
+modifier. This writes it to history so you can simply hit "up" and then modify.
+```bash
+!42:p
+```
+
+### Use builtin `fc` to modify a historic command in an editor
+```
+fc -10  # edit the 10th previous command
+
+fc 1980  # edit command 1980
+```
+Upon exiting, the command will be executed. 
+
+### Store a typed but unexecuted command in history
+<kbd>Alt</kbd>+<kbd>#</kbd> comments out the current line and puts it in the history buffer.
+
+Alternatively, <kbd>Esc</kbd><kbd>#</kbd>
+
+### Navigate history with vim commands
+With vi set as the editor (`set -o vi`), hit <kbd>Esc</kbd>, followed by the number of the command 
+you want + <kbd>G</kbd>. This will place that command in the current prompt for editing.
