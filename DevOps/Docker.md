@@ -39,3 +39,10 @@ early on and create the venv. Later, copy the whole app dir. Don't forget to .do
 
 ## Environment variables
 The docker-compose can override env values set in the Dockerfile.
+
+## Connecting to a running mysql container
+```bash
+docker exec -it brankerdb mysql -uroot -p
+```
+where `brankerdb` is the container name, `-uroot` is specifying that the user is "root" and `-p` is
+going to prompt you for a password entry.
