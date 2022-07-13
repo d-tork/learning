@@ -1,3 +1,10 @@
+# Data science overall
+## Types of problems
+Classification | regression | clustering | dimensionality reduction
+
+## Families of models
+
+
 # Advice from a Medium article on Data Analysis
 
 * too many software engineers apply machine learning tools without a thorough understanding of the statistical theories behind them
@@ -45,3 +52,7 @@ $$ X^ \prime = \dfrac{X-\mu}{\sigma}$$
 
 :eight_spoked_asterisk: Fit your model to raw, normalized, and standardized
 ddata and compare performance.
+
+# Math and Numbers
+Hardin: 
+> "Numeracy" means more than measuring and counting... many major discoveries were made with very little measuring and counting. The attitude science requires of its practitioners is respect, bording on reverence, for ration, proportions, and rates of change. 
