@@ -31,3 +31,15 @@ with higher magnitude, if we don't scale them.
 :x: _Not_ in tree-based algorithms, they're insensitive to the scale of the features because they 
 are only splitting a node on a single feature, independent of the others.
 
+## Normalization (Min-Max scaler)
+Values are shifted and rescaled so they end up ranging between 0 and 1. 
+
+$$ X^ \prime = \dfrac{X-Xmin}{X_max-X_min}$$
+
+## Standardization
+Values are centered around the mean with a unit standard deviation. The mean of
+the attribute becomes 0 and resultant distribution has a unit standard 
+deviation. 
+
+:eight_spoked_asterisk: Fit your model to raw, normalized, and standardized
+ddata and compare performance.
