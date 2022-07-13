@@ -19,4 +19,15 @@
 9. Support Vector Machines
 10. Unsupervised learning
 
+# Scaling Data
+## When to use feature scaling
+In gradient-descent-based algorithms: linear regression, logistic regression, neural network, etc.
+Having features on a similar scale can help the gradient descent converge more quickly towards the
+minima.
+
+In distance-based algorithms: KNN, K-means, SVM, SVR. Higher weightings would be given to features
+with higher magnitude, if we don't scale them. 
+
+:x: _Not_ in tree-based algorithms, they're insensitive to the scale of the features because they 
+are only splitting a node on a single feature, independent of the others.
 
