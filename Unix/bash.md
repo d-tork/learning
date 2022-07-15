@@ -210,6 +210,8 @@ done < emails
 ## Bash history
 [Great Digital Ocean article](https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps) on using bash history and setting up how it's appended to.
 
+[Good StackOverflow answer](https://superuser.com/questions/7414/how-can-i-search-the-bash-history-and-rerun-a-command)
+
 ### Get bash history into vim for use elsewhere
 ```bash
 history | vim -
@@ -239,3 +241,13 @@ Alternatively, <kbd>Esc</kbd><kbd>#</kbd>
 ### Navigate history with vim commands
 With vi set as the editor (`set -o vi`), hit <kbd>Esc</kbd>, followed by the number of the command 
 you want + <kbd>G</kbd>. This will place that command in the current prompt for editing.
+
+### Searching through history as you type
+<kbd>Ctrl</kbd>+<kbd>R</kbd>, then start typing. It will display the most recent command that matches
+your pattern, and you can cycle through matches with <kbd>Ctrl</kbd>+<kbd>R</kbd> continuously.
+
+### Immediately execute the first matching result
+Type a <kbd>!</kbd>, followed by your search pattern. **Careful:** Hitting enter will execute.
+```bash
+!vi  # executes the last vim command
+```
