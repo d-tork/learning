@@ -126,3 +126,35 @@ dataframe.write \
 REPLACE TABLE <your-table> USING DELTA PARTITIONED BY (<your-partition-columns>) LOCATION "<your-table-path>" AS SELECT ...
 
 ```
+
+## MLflow
+
+### 3 Main components
+1. **Tracking** - model registry
+2. **Models** - general format that standardizes deployment
+3. **Projects** - packaging for reproducible runs
+
+### Structure
+```
+MLflow server
+|-- Experiments
+  |-- runs
+  |-- runs
+  |-- runs
+    |-- parameters
+    |-- metrics
+    |-- artifacts
+    |-- source
+```
+
+On project structure: if you structure your git repo correctly, you can run it directly from a git
+URL.
+
+### Initiate
+put this context manager _in_ a function `training_func()`
+
+```python
+with mlflow.start_run() as run:
+	my_model_func()
+```
+
