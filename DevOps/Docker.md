@@ -31,6 +31,35 @@ docker run -dp 3000:3000 -w /app -v '$(pwd):/app" image \
 where `-d` is detached (run in background), `-p` to map ports, `-w` the working directory, `-v`
 the volume mount.
 
+### Debugging a failed build by running intermediate layers
+https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
+
+With a Dockerfile specifying intermediate stages like so:
+```dockerfile
+FROM python:3.9.13-slim-buster AS stage-01
+VOLUME /data
+
+FROM stage-01 AS stage-02
+RUN pip3 install --upgrade pip setuptools
+
+FROM stage-02 AS stage-03
+WORKDIR /app
+COPY . .
+
+FROM stage-03 AS stage-04
+RUN pip3 install .
+```
+
+but the build is failing at, say, `stage-04`, just build everything up to that point:
+```bash
+docker build --target stage-03 -t myapp:dev .
+```
+
+Then `docker images` reveals an image that you can interact with:
+```bash
+docker run --rm -it myapp:dev /bin/bash
+```
+
 ## Layer Caching
 Since dependencies don't change often, copy just the requirements.txt (or environment.yaml) file
 early on and create the venv. Later, copy the whole app dir. Don't forget to .dockerignore the 
