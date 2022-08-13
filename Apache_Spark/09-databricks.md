@@ -183,3 +183,23 @@ syntax instead of `%run ./steps/raw...`
 
 Follow it with an assert statement, to prevent the next one from running. It also spins up a cluster
 per notebook run. 
+
+## Databricks Architect Essentials
+
+### Delta Architecture
+"A recommended best practice":
+
+* Bronze
+	- raw ingest
+	system-of-record, never delete, land it as-is
+* Silver
+	- filtered, cleaned, augmented
+* Gold
+	- biz-level aggregates
+
+### Engine
+* essentially a rewrite of Spark (SQL) in C++, not open source
+* file management, performance optimizations
+* dynamic file pruning
+* the high-performance query engine
+* code goes to Spark or Photon or both
