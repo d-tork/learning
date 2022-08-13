@@ -158,3 +158,28 @@ with mlflow.start_run() as run:
 	my_model_func()
 ```
 
+## Data Engineering with Databricks
+Normally, Kafka would be serving up the data files to us (it is mocked in the Databricks lessons).
+
+Write simple `assert` statements in lieu of testing.
+
+### Raw to Bronze
+1. assign to streaming df a path via `readStream()`
+2. re-assign dataframe with a select statement to add metadata via `lit()` and `current_timestamp()`:
+time, date, source, data
+3. WRITE stream to a Bronze table
+	- partition by ingest date, and rename col as `p_ingestdate`
+
+### Data Marts
+Aggregates made available to customers, i.e. there should be a data mart for seeing what sources we 
+have linked to each employee (and the breadth + depth). 
+
+### Chaining notebooks
+In jobs, to have one notebook kick off another one, you use the 
+```python
+dbutils.notebook.run('./steps/raw-to-bronze')
+```
+syntax instead of `%run ./steps/raw...`
+
+Follow it with an assert statement, to prevent the next one from running. It also spins up a cluster
+per notebook run. 
