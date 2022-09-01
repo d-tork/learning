@@ -13,7 +13,7 @@ grep -ir 'my text' .
 
 ## Searching _for_ a file by name pattern
 ```
-find . type f -name "*.tex"
+find . -type f -name "*.tex"
 ```
 > Traverse current directory (and subdirectories) for regular files that end in "tex".
 
