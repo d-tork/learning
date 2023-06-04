@@ -31,7 +31,8 @@ Upper confience bound algorithm: pick the option (slot machine) for which the to
 
 ## A/B testing
 
-## Concepts of time
+## Sorting
+### Big O Notation
 | notation         | name             | metaphor                       |
 |------------------|------------------|--------------------------------|
 | O(1)             | constant time    | clean for the party            |
@@ -39,3 +40,19 @@ Upper confience bound algorithm: pick the option (slot machine) for which the to
 | O(n<sup>2</sup>) | quadratic time   | each new guest hugs all others |
 | O(2<sup>n</sup>  | exponential time | work doubles for each guest    |
 | O(n!)            | factorial time   | hell                           |
+
+* Bubble sort: scan and look for out-of-order pairs
+* Insertion sort: pull everything off the shelf and put them back in order
+* Merge sort: sort stacks of items separately, then when you merge stacks simply compare the two top (one from each stack) and move the smaller to the new stack. This worked in "linearithmic " time
+* Bucket sort: pre-group into sorted categories with no regard for finer, intracategory sorting. (me: so it's like Spark's Z-ordering?)
+
+Tradeoff between sorting and searching: sometimes searching a messy group is faster.
+
+Sports: single elimination tournaments, round-robin, ladder tournaments; noise from imperfect outcomes. Comparison counting sort.
+
+Races are better than fights, they are cardinal rather than ordinal outcomes.
+
+## Caching
+LRU (least recently used). Consider hardware performance *and* distances. Random Eviction, FIFO, or LRU. What you've used recently is a _great_ approximation of what you'll use in the future. 
+
+Noguchi Filing System: left-insertion rule (or "top of the pile")
