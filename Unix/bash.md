@@ -254,3 +254,8 @@ Type a <kbd>!</kbd>, followed by your search pattern. **Careful:** Hitting enter
 ```bash
 !vi  # executes the last vim command
 ```
+
+## One-line `for` loops with glob pattern
+```bash
+for f in ./billdownload-*; do ./runner.sh ${f}; done
+```
