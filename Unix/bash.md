@@ -23,6 +23,9 @@ find /data -type f -name '*.csv' -size -2k
 # (that are smaller than 2KB)
 ```
 
+And to [remove files which match that pattern](https://unix.stackexchange.com/a/84853), 
+append the `-delete` option if your `find` supports it.
+
 ## Encrypting with GPG (`gnupg`)
 Based on [multiple](https://linuxconfig.org/how-to-encrypt-and-decrypt-individual-files-with-gpg/)
 [articles](https://linuxconfig.org/how-to-create-compressed-encrypted-archives-with-tar-and-gpg/)
