@@ -259,3 +259,25 @@ Type a <kbd>!</kbd>, followed by your search pattern. **Careful:** Hitting enter
 ```bash
 for f in ./billdownload-*; do ./runner.sh ${f}; done
 ```
+
+## Checking if last command executed successfully
+
+```bash
+if command ; then
+	echo success
+else
+	echo failed
+fi
+```
+
+or as a beginner antipattern:
+
+```bash
+echo "this will work"
+RESULT=$?
+if [ $RESULT -eq 0 ]; then
+  echo success
+else
+  echo failed
+fi
+```
