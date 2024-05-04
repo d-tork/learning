@@ -13,7 +13,7 @@
 | chore                |  |                |
 | build                |  |                |
 
-> <type> (<scope>): <Subject>
+> `<type>` (`<scope>`): `<Subject>`
 
 as in 
 
