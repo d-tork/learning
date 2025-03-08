@@ -281,3 +281,16 @@ else
   echo failed
 fi
 ```
+
+## Redirecting output and errors
+
+Send errors from your command to a specific file (redirect STDERR)
+```
+cmd 2> errors.txt
+```
+
+Combine errors with normal output
+```
+cmd 2>&1
+```
+
